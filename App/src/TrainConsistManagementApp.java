@@ -1,24 +1,22 @@
 import java.util.*;
 import java.util.stream.Collectors;
 
-// Bogie class
 class Bogie {
     String type;
     int capacity;
 
     // Constructor
-    public Bogie(String type, int capacity) {
+    Bogie(String type, int capacity) {
         this.type = type;
         this.capacity = capacity;
     }
 
     // Display method
-    public void display() {
-        System.out.println("Type: " + type + ", Capacity: " + capacity);
+    void display() {
+        System.out.println(type + " -> Capacity: " + capacity);
     }
 }
 
-// Main class (IMPORTANT: as asked)
 public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
@@ -30,24 +28,25 @@ public class TrainConsistManagementApp {
         bogies.add(new Bogie("AC Chair", 60));
         bogies.add(new Bogie("First Class", 40));
         bogies.add(new Bogie("Sleeper", 80));
+        bogies.add(new Bogie("AC Chair", 75));
 
-        // Step 2: Filter using Stream API
-        List<Bogie> filteredBogies = bogies.stream()
-                .filter(b -> b.capacity > 60)   // condition
-                .collect(Collectors.toList());
+        // Step 2: Group bogies by type
+        Map<String, List<Bogie>> groupedBogies = bogies.stream()
+                .collect(Collectors.groupingBy(b -> b.type));
 
-        // Step 3: Display filtered bogies
-        System.out.println("Filtered Bogies (Capacity > 60):");
+        // Step 3: Display grouped bogies
+        System.out.println("Grouped Bogies:");
 
-        for (Bogie b : filteredBogies) {
-            b.display();
+        for (String key : groupedBogies.keySet()) {
+            System.out.println("\nType: " + key);
+
+            for (Bogie b : groupedBogies.get(key)) {
+                b.display();
+            }
         }
 
-        // Step 4: Show original list unchanged
+        // Step 4: Original list remains unchanged
         System.out.println("\nOriginal Bogies:");
-
-        for (Bogie b : bogies) {
-            b.display();
-        }
+        bogies.forEach(Bogie::display);
     }
 }
