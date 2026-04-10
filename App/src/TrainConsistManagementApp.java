@@ -30,6 +30,23 @@ public class TrainConsistManagementApp {
         bogies.add(new Bogie("Sleeper", 80));
         bogies.add(new Bogie("AC Chair", 75));
 
+
+        // Step 2: Group bogies by type
+        Map<String, List<Bogie>> groupedBogies = bogies.stream()
+                .collect(Collectors.groupingBy(b -> b.type));
+
+        // Step 3: Display grouped bogies
+        System.out.println("Grouped Bogies:");
+
+        for (String key : groupedBogies.keySet()) {
+            System.out.println("\nType: " + key);
+
+            for (Bogie b : groupedBogies.get(key)) {
+                b.display();
+            }
+        }
+
+
         // Step 2: Apply Stream filter (capacity > 60)
         List<Bogie> filteredBogies = bogies.stream()
                 .filter(b -> b.capacity > 60)
