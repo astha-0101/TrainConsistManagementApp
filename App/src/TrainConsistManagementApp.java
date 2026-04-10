@@ -25,7 +25,7 @@ public class TrainConsistManagementApp {
         bogies.add(new GoodsBogie("Cylindrical", "Petroleum"));
         bogies.add(new GoodsBogie("Open", "Coal"));
         bogies.add(new GoodsBogie("Rectangular", "Grain"));
-        bogies.add(new GoodsBogie("Cylindrical", "Petroleum")); // valid
+        bogies.add(new GoodsBogie("Cylindrical", "Petroleum"));
 
         // Step 2: Apply safety check using Stream API
         boolean isSafe = bogies.stream()
