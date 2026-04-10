@@ -37,6 +37,6 @@ public class TrainConsistManagementApp {
         System.out.println("Goods Bogies:");
         bogies.forEach(GoodsBogie::display);
 
-        System.out.println("\nSafety Compliance Status: " + (isSafe ? "SAFE ✅" : "UNSAFE ❌"));
+        System.out.println("\nSafety Compliance Status: " + (isSafe ? "SAFE " : "UNSAFE "));
     }
 }
