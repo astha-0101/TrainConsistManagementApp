@@ -1,45 +1,53 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 // Bogie class
 class Bogie {
-    String name;
+    String type;
     int capacity;
 
-    public Bogie(String name, int capacity) {
-        this.name = name;
+    // Constructor
+    public Bogie(String type, int capacity) {
+        this.type = type;
         this.capacity = capacity;
     }
 
-    @Override
-    public String toString() {
-        return name + " -> " + capacity;
+    // Display method
+    public void display() {
+        System.out.println("Type: " + type + ", Capacity: " + capacity);
     }
 }
 
+// Main class (IMPORTANT: as asked)
 public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
 
-        System.out.println("=== Train Consist Management App ===");
-
-        // Create list of bogies
+        // Step 1: Create list of bogies
         List<Bogie> bogies = new ArrayList<>();
 
-        // Add bogies
         bogies.add(new Bogie("Sleeper", 72));
         bogies.add(new Bogie("AC Chair", 60));
-        bogies.add(new Bogie("First Class", 24));
+        bogies.add(new Bogie("First Class", 40));
+        bogies.add(new Bogie("Sleeper", 80));
 
-        // Sort bogies by capacity (ascending)
-        bogies.sort(Comparator.comparingInt(b -> b.capacity));
+        // Step 2: Filter using Stream API
+        List<Bogie> filteredBogies = bogies.stream()
+                .filter(b -> b.capacity > 60)   // condition
+                .collect(Collectors.toList());
 
-        // Display sorted bogies
-        System.out.println("Bogies sorted by capacity:");
+        // Step 3: Display filtered bogies
+        System.out.println("Filtered Bogies (Capacity > 60):");
 
-        for (Bogie b : bogies) {
-            System.out.println(b);
+        for (Bogie b : filteredBogies) {
+            b.display();
         }
 
-        System.out.println("Program continues...");
+        // Step 4: Show original list unchanged
+        System.out.println("\nOriginal Bogies:");
+
+        for (Bogie b : bogies) {
+            b.display();
+        }
     }
 }
