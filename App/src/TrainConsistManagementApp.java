@@ -1,19 +1,17 @@
 import java.util.*;
-import java.util.stream.Collectors;
 
-class Bogie {
-    String type;
-    int capacity;
+class GoodsBogie {
+    String type;   // Cylindrical / Rectangular / Open
+    String cargo;  // Petroleum / Coal / Grain
 
     // Constructor
-    Bogie(String type, int capacity) {
+    GoodsBogie(String type, String cargo) {
         this.type = type;
-        this.capacity = capacity;
+        this.cargo = cargo;
     }
 
-    // Display method
     void display() {
-        System.out.println(type + " -> Capacity: " + capacity);
+        System.out.println(type + " -> Cargo: " + cargo);
     }
 }
 
@@ -21,32 +19,24 @@ public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
 
-        // Step 1: Create list of bogies
-        List<Bogie> bogies = new ArrayList<>();
+        // Step 1: Create list of goods bogies
+        List<GoodsBogie> bogies = new ArrayList<>();
 
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 60));
-        bogies.add(new Bogie("First Class", 40));
-        bogies.add(new Bogie("Sleeper", 80));
-        bogies.add(new Bogie("AC Chair", 75));
+        bogies.add(new GoodsBogie("Cylindrical", "Petroleum"));
+        bogies.add(new GoodsBogie("Open", "Coal"));
+        bogies.add(new GoodsBogie("Rectangular", "Grain"));
+        bogies.add(new GoodsBogie("Cylindrical", "Petroleum")); // valid
 
-        // Step 2: Group bogies by type
-        Map<String, List<Bogie>> groupedBogies = bogies.stream()
-                .collect(Collectors.groupingBy(b -> b.type));
+        // Step 2: Apply safety check using Stream API
+        boolean isSafe = bogies.stream()
+                .allMatch(b ->
+                        !b.type.equals("Cylindrical") || b.cargo.equals("Petroleum")
+                );
 
-        // Step 3: Display grouped bogies
-        System.out.println("Grouped Bogies:");
+        // Step 3: Display result
+        System.out.println("Goods Bogies:");
+        bogies.forEach(GoodsBogie::display);
 
-        for (String key : groupedBogies.keySet()) {
-            System.out.println("\nType: " + key);
-
-            for (Bogie b : groupedBogies.get(key)) {
-                b.display();
-            }
-        }
-
-        // Step 4: Original list remains unchanged
-        System.out.println("\nOriginal Bogies:");
-        bogies.forEach(Bogie::display);
+        System.out.println("\nSafety Compliance Status: " + (isSafe ? "SAFE ✅" : "UNSAFE ❌"));
     }
 }
