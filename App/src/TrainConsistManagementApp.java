@@ -31,15 +31,15 @@ public class TrainConsistManagementApp {
 
         // Step 5: Display results
         if (isTrainValid) {
-            System.out.println("Train ID is VALID ✅");
+            System.out.println("Train ID is VALID ");
         } else {
-            System.out.println("Train ID is INVALID ❌");
+            System.out.println("Train ID is INVALID ");
         }
 
         if (isCargoValid) {
-            System.out.println("Cargo Code is VALID ✅");
+            System.out.println("Cargo Code is VALID ");
         } else {
-            System.out.println("Cargo Code is INVALID ❌");
+            System.out.println("Cargo Code is INVALID ");
         }
 
         sc.close();
