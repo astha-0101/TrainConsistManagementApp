@@ -4,12 +4,20 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 class Bogie {
-    String type;
-    int capacity;
+    private String type;
+    private int capacity;
 
     public Bogie(String type, int capacity) {
         this.type = type;
         this.capacity = capacity;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public String getType() {
+        return type;
     }
 }
 
@@ -25,7 +33,7 @@ public class UC8TrainConsistMgmt {
         bogies.add(new Bogie("Sleeper", 80));
 
         return bogies.stream()
-                .filter(b -> b.capacity > 60)
+                .filter(b -> b.getCapacity() > 60)
                 .collect(Collectors.toList());
     }
 }
