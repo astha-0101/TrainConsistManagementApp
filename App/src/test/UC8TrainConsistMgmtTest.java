@@ -20,4 +20,4 @@ class UC8TrainConsistMgmtTest {
             assertTrue(b.capacity > 60);
         }
     }
-}
+}w
