@@ -1,47 +1,55 @@
-import java.util.regex.*;
 import java.util.*;
+import java.util.stream.Collectors;
+
+class Bogie {
+    String type;
+    int capacity;
+
+    Bogie(String type, int capacity) {
+        this.type = type;
+        this.capacity = capacity;
+    }
+}
 
 public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
 
-        Scanner sc = new Scanner(System.in);
+        // Step 1: Create large dataset of bogies
+        List<Bogie> bogies = new ArrayList<>();
 
-        // Step 1: Take input
-        System.out.print("Enter Train ID: ");
-        String trainId = sc.nextLine();
-
-        System.out.print("Enter Cargo Code: ");
-        String cargoCode = sc.nextLine();
-
-        // Step 2: Define regex patterns
-        String trainPattern = "TRN-\\d{4}";
-        String cargoPattern = "PET-[A-Z]{2}";
-
-        // Step 3: Compile patterns
-        Pattern p1 = Pattern.compile(trainPattern);
-        Pattern p2 = Pattern.compile(cargoPattern);
-
-        // Step 4: Match input
-        Matcher m1 = p1.matcher(trainId);
-        Matcher m2 = p2.matcher(cargoCode);
-
-        boolean isTrainValid = m1.matches();
-        boolean isCargoValid = m2.matches();
-
-        // Step 5: Display results
-        if (isTrainValid) {
-            System.out.println("Train ID is VALID ✅");
-        } else {
-            System.out.println("Train ID is INVALID ❌");
+        for (int i = 0; i < 100000; i++) {
+            bogies.add(new Bogie("Sleeper", (i % 100) + 1));
         }
 
-        if (isCargoValid) {
-            System.out.println("Cargo Code is VALID ✅");
-        } else {
-            System.out.println("Cargo Code is INVALID ❌");
+        // ---------------- LOOP BASED ----------------
+        long startLoop = System.nanoTime();
+
+        List<Bogie> loopResult = new ArrayList<>();
+        for (Bogie b : bogies) {
+            if (b.capacity > 60) {
+                loopResult.add(b);
+            }
         }
 
-        sc.close();
+        long endLoop = System.nanoTime();
+        long loopTime = endLoop - startLoop;
+
+        // ---------------- STREAM BASED ----------------
+        long startStream = System.nanoTime();
+
+        List<Bogie> streamResult = bogies.stream()
+                .filter(b -> b.capacity > 60)
+                .collect(Collectors.toList());
+
+        long endStream = System.nanoTime();
+        long streamTime = endStream - startStream;
+
+        // Step 4: Display results
+        System.out.println("Loop Result Size: " + loopResult.size());
+        System.out.println("Stream Result Size: " + streamResult.size());
+
+        System.out.println("\nLoop Time (nanoseconds): " + loopTime);
+        System.out.println("Stream Time (nanoseconds): " + streamTime);
     }
 }
